@@ -1,17 +1,17 @@
 import React, { useState, useContext } from "react";
-import { View, TextInput, Button, StyleSheet, Text } from "react-native";
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { DataContext } from "../context/DataContext";
+import handleCancel from "../features/CancelHandler";
 
 const CreateRecipeNotes = ({ navigation }) => {
   const { notes, setNotes } = useContext(DataContext);
-
-  const handleSave = () => {
-    // Perform any necessary actions with the saved notes
-    console.log("Saved notes:", notes);
-
-    // Navigate to the next screen or perform any other actions
-    navigation.navigate("CreateRecipeReview");
-  };
 
   return (
     <View style={styles.container}>
@@ -26,8 +26,18 @@ const CreateRecipeNotes = ({ navigation }) => {
       />
 
       <View style={styles.buttonContainer}>
-        <Button title="Save" onPress={handleSave} />
-        <Button title="Cancel" onPress={() => navigation.goBack()} />
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={() => navigation.navigate("CreateRecipeReview")}
+        >
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.cancelButton}
+          onPress={() => handleCancel(resetContext, navigation)}
+        >
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -55,6 +65,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 30,
+  },
+  saveButton: {
+    backgroundColor: "green",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 5,
+  },
+  cancelButton: {
+    backgroundColor: "red",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

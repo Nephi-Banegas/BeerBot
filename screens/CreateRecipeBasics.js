@@ -1,27 +1,23 @@
 import React, { useContext, useState } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import { DataContext } from "../context/DataContext";
+import handleCancel from "../features/CancelHandler";
 
 const CreateNewRecipeBasics = ({ navigation }) => {
-  const { basicInfo, setBasicInfo } = useContext(DataContext);
+  const { basicInfo, setBasicInfo, resetContext } = useContext(DataContext);
 
   const handleChange = (name, value) => {
     setBasicInfo((prevBasicInfo) => ({
       ...prevBasicInfo,
       [name]: value,
     }));
-  };
-
-  const handleSave = () => {
-    // Use the basicInfo object as needed (e.g., save it to a database)
-    console.log(basicInfo);
-    // Navigate to another screen if desired
-    navigation.navigate("CreateRecipeGrainBill");
-  };
-
-  const handleCancel = () => {
-    // Perform cancel logic here
-    console.log("Cancel button pressed");
   };
 
   return (
@@ -58,8 +54,18 @@ const CreateNewRecipeBasics = ({ navigation }) => {
       />
 
       <View style={styles.buttonContainer}>
-        <Button title="Save" onPress={handleSave} />
-        <Button title="Cancel" onPress={handleCancel} />
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={() => navigation.navigate("CreateRecipeGrainBill")}
+        >
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.cancelButton}
+          onPress={() => handleCancel(resetContext, navigation)}
+        >
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -81,6 +87,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 30,
+  },
+  saveButton: {
+    backgroundColor: "green",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 5,
+  },
+  cancelButton: {
+    backgroundColor: "red",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

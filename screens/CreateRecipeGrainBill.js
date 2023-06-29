@@ -6,12 +6,14 @@ import {
   Text,
   FlatList,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import { DataContext } from "../context/DataContext";
 import RenderGrainBill from "../components/RenderGrainBill";
+import handleCancel from "../features/CancelHandler";
 
 const CreateRecipeGrainBill = ({ navigation }) => {
-  const { grainBill, setGrainBill } = useContext(DataContext);
+  const { grainBill, setGrainBill, resetContext } = useContext(DataContext);
   const [grainType, setGrainType] = useState("");
   const [grainAmount, setGrainAmount] = useState("");
 
@@ -55,11 +57,18 @@ const CreateRecipeGrainBill = ({ navigation }) => {
       <RenderGrainBill grainBill={grainBill} />
 
       <View style={styles.buttonContainer}>
-        <Button
-          title="Save"
+        <TouchableOpacity
+          style={styles.saveButton}
           onPress={() => navigation.navigate("CreateRecipeHopSchedule")}
-        />
-        <Button title="Cancel" onPress={() => navigation.goBack()} />
+        >
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.cancelButton}
+          onPress={() => handleCancel(resetContext, navigation)}
+        >
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -93,6 +102,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 30,
+  },
+  saveButton: {
+    backgroundColor: "green",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 5,
+  },
+  cancelButton: {
+    backgroundColor: "red",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

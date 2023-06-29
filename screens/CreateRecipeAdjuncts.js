@@ -6,15 +6,17 @@ import {
   Text,
   FlatList,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import RenderAdjuncts from "../components/RenderAdjuncts";
 import { DataContext } from "../context/DataContext";
+import handleCancel from "../features/CancelHandler";
 
 const CreateRecipeAdjuncts = ({ navigation }) => {
   const [adjunctType, setAdjunctType] = useState("");
   const [adjunctAmount, setAdjunctAmount] = useState("");
   const [adjunctTime, setAdjunctTime] = useState("");
-  const { adjuncts, setAdjuncts } = useContext(DataContext);
+  const { adjuncts, setAdjuncts, resetContext } = useContext(DataContext);
 
   const handleAddAdjunct = () => {
     // Check if both grain type and amount are provided
@@ -69,11 +71,18 @@ const CreateRecipeAdjuncts = ({ navigation }) => {
       <RenderAdjuncts adjuncts={adjuncts} />
 
       <View style={styles.buttonContainer}>
-        <Button
-          title="Save"
+        <TouchableOpacity
+          style={styles.saveButton}
           onPress={() => navigation.navigate("CreateRecipeNotes")}
-        />
-        <Button title="Cancel" onPress={() => navigation.goBack()} />
+        >
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.cancelButton}
+          onPress={() => handleCancel(resetContext, navigation)}
+        >
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -107,6 +116,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 30,
+  },
+  saveButton: {
+    backgroundColor: "green",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 5,
+  },
+  cancelButton: {
+    backgroundColor: "red",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

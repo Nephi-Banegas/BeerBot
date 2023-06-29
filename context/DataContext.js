@@ -33,6 +33,20 @@ export const DataProvider = ({ children }) => {
     setNotes(text);
   };
 
+  const resetContext = () => {
+    setAdjuncts([]);
+    setGrainBill([]);
+    setHopSchedule([]);
+    setNotes("");
+    setBasicInfo({
+      beerName: "",
+      beerStyle: "",
+      targetOG: "",
+      targetABV: "",
+      targetVolume: "",
+    });
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -46,6 +60,7 @@ export const DataProvider = ({ children }) => {
         setAdjuncts,
         notes,
         setNotes,
+        resetContext,
       }}
     >
       {children}

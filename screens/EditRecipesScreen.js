@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Button, StyleSheet, Text } from "react-native";
+import { View, Button, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 const EditRecipesScreen = ({ navigation }) => {
   const handleCreateNewRecipe = () => {
@@ -15,11 +15,12 @@ const EditRecipesScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.message}>What would you like to do?</Text>
       <View style={styles.buttonContainer}>
-        <Button title="Create a New Recipe" onPress={handleCreateNewRecipe} />
-        <Button
-          title="View/Edit an Existing Recipe"
-          onPress={handleViewEditRecipe}
-        />
+        <TouchableOpacity style={styles.button} onPress={handleCreateNewRecipe}>
+          <Text style={styles.buttonText}>Create New Recipe</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleViewEditRecipe}>
+          <Text style={styles.buttonText}>View/Edit Recipe</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -37,8 +38,20 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   buttonContainer: {
-    flex: 1,
+    alignItems: "center",
+  },
+  button: {
+    width: 200,
+    height: 50,
+    backgroundColor: "#5637DD",
+    alignItems: "center",
     justifyContent: "center",
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 
